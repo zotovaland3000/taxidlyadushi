@@ -1,0 +1,1312 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Такси для души</title>
+	<link rel="icon" type="image/png"
+		href="https://github.com/zotovaland3000/taxidlyadushi/blob/main/logo.png?raw=true">
+	<style>
+		:root {
+			--bg-color: #0a0a1a;
+			--text-color: #ffffff;
+			--header-bg: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+			--card-bg: rgba(30, 30, 60, 0.8);
+			--card-shadow: 0 0 15px rgba(106, 17, 203, 0.5), 0 0 30px rgba(37, 117, 252, 0.3);
+			--input-bg: rgba(40, 40, 70, 0.8);
+			--input-border: #6a11cb;
+			--footer-bg: #0d0d1f;
+			--feature-icon: #6a11cb;
+			--theme-indicator-bg: #6a11cb;
+			--theme-indicator-text: #fff;
+			--neon-glow: 0 0 10px rgba(106, 17, 203, 0.7), 0 0 20px rgba(106, 17, 203, 0.5), 0 0 30px rgba(106, 17, 203, 0.3);
+			--blue-neon-glow: 0 0 10px rgba(37, 117, 252, 0.7), 0 0 20px rgba(37, 117, 252, 0.5), 0 0 30px rgba(37, 117, 252, 0.3);
+		}
+
+		.dark-theme {
+			--bg-color: #0a0a1a;
+			--text-color: #f0f0f0;
+			--header-bg: linear-gradient(135deg, #2d0c5e 0%, #0d2f6d 100%);
+			--card-bg: rgba(45, 45, 70, 0.8);
+			--card-shadow: 0 0 15px rgba(106, 17, 203, 0.6), 0 0 25px rgba(37, 117, 252, 0.4);
+			--input-bg: rgba(50, 50, 80, 0.8);
+			--input-border: #8e44ad;
+			--footer-bg: #0d0d1f;
+			--feature-icon: #8e44ad;
+			--theme-indicator-bg: #8e44ad;
+			--theme-indicator-text: #fff;
+		}
+
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			font-family: 'Arial', sans-serif;
+			transition: background-color 0.3s, color 0.3s, box-shadow 0.3s, text-shadow 0.3s;
+		}
+
+		body {
+			background-color: var(--bg-color);
+			color: var(--text-color);
+			line-height: 1.6;
+			background-image:
+				radial-gradient(circle at 10% 20%, rgba(106, 17, 203, 0.1) 0%, transparent 20%),
+				radial-gradient(circle at 90% 70%, rgba(37, 117, 252, 0.1) 0%, transparent 20%);
+		}
+
+		.container {
+			max-width: 1200px;
+			margin: 0 auto;
+			padding: 0 20px;
+		}
+
+		/* Header styles */
+		header {
+			background: var(--header-bg);
+			color: white;
+			padding: 15px 0;
+			box-shadow: var(--neon-glow);
+			border-bottom: 1px solid rgba(106, 17, 203, 0.5);
+		}
+
+		.header-content {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+		}
+
+		.logo {
+			font-size: 28px;
+			font-weight: bold;
+			display: flex;
+			align-items: center;
+			cursor: pointer;
+			text-shadow: var(--neon-glow);
+		}
+
+		.logo-icon {
+			margin-right: 10px;
+			font-size: 32px;
+			filter: drop-shadow(0 0 5px rgba(255, 255, 255, 0.8));
+		}
+
+		nav ul {
+			display: flex;
+			list-style: none;
+			align-items: center;
+		}
+
+		nav ul li {
+			margin-left: 25px;
+		}
+
+		nav ul li a {
+			color: white;
+			text-decoration: none;
+			font-weight: 500;
+			transition: all 0.3s ease;
+			text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+		}
+
+		nav ul li a:hover {
+			color: #ffd700;
+			text-shadow: 0 0 10px #ffd700, 0 0 20px #ffd700;
+		}
+
+		.theme-toggle-container {
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.theme-toggle {
+			background: rgba(255, 255, 255, 0.2);
+			border: none;
+			width: 50px;
+			height: 24px;
+			border-radius: 12px;
+			cursor: pointer;
+			position: relative;
+			display: flex;
+			align-items: center;
+			padding: 0 3px;
+			box-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+		}
+
+		.theme-toggle::before {
+			content: '';
+			position: absolute;
+			width: 20px;
+			height: 20px;
+			border-radius: 50%;
+			background: white;
+			transition: transform 0.3s;
+			box-shadow: 0 0 5px white;
+		}
+
+		.dark-theme .theme-toggle::before {
+			transform: translateX(26px);
+		}
+
+		.theme-indicator {
+			background: var(--theme-indicator-bg);
+			color: var(--theme-indicator-text);
+			padding: 5px 10px;
+			border-radius: 15px;
+			font-size: 14px;
+			box-shadow: var(--neon-glow);
+			position: relative;
+			top: 0;
+			right: 0;
+		}
+
+		.theme-indicator i {
+			margin-right: 5px;
+		}
+
+		/* Hero section */
+		.hero {
+			background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="%236a11cb" opacity="0.1"/><path d="M0 0L100 100" stroke="%232575fc" stroke-width="2" opacity="0.2"/></svg>');
+			padding: 80px 0;
+			text-align: center;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.hero::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: linear-gradient(45deg, rgba(106, 17, 203, 0.1) 0%, rgba(37, 117, 252, 0.1) 100%);
+			z-index: -1;
+		}
+
+		.hero h1 {
+			font-size: 42px;
+			margin-bottom: 20px;
+			color: #6a11cb;
+			text-shadow: var(--neon-glow);
+			animation: pulse 2s infinite;
+		}
+
+		@keyframes pulse {
+			0% {
+				text-shadow: 0 0 10px rgba(106, 17, 203, 0.7), 0 0 20px rgba(106, 17, 203, 0.5), 0 0 30px rgba(106, 17, 203, 0.3);
+			}
+
+			50% {
+				text-shadow: 0 0 15px rgba(106, 17, 203, 0.8), 0 0 25px rgba(106, 17, 203, 0.6), 0 0 35px rgba(106, 17, 203, 0.4);
+			}
+
+			100% {
+				text-shadow: 0 0 10px rgba(106, 17, 203, 0.7), 0 0 20px rgba(106, 17, 203, 0.5), 0 0 30px rgba(106, 17, 203, 0.3);
+			}
+		}
+
+		.dark-theme .hero h1 {
+			color: #6a11cb;
+		}
+
+		.hero p {
+			font-size: 20px;
+			max-width: 700px;
+			margin: 0 auto 30px;
+			color: #ccc;
+			text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+		}
+
+		.dark-theme .hero p {
+			color: #ccc;
+		}
+
+		.btn {
+			display: inline-block;
+			background: #6a11cb;
+			color: white;
+			padding: 15px 30px;
+			border-radius: 50px;
+			text-decoration: none;
+			font-weight: bold;
+			transition: all 0.3s ease;
+			box-shadow: var(--neon-glow);
+			cursor: pointer;
+			border: none;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.btn:hover {
+			background: #2575fc;
+			transform: translateY(-3px);
+			box-shadow: var(--blue-neon-glow);
+		}
+
+		.btn::after {
+			content: '';
+			position: absolute;
+			top: -50%;
+			left: -50%;
+			width: 200%;
+			height: 200%;
+			background: linear-gradient(45deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0) 100%);
+			transform: rotate(45deg);
+			transition: all 0.5s;
+			opacity: 0;
+		}
+
+		.btn:hover::after {
+			opacity: 1;
+			animation: shimmer 1.5s infinite;
+		}
+
+		@keyframes shimmer {
+			0% {
+				transform: translateX(-100%) rotate(45deg);
+			}
+
+			100% {
+				transform: translateX(100%) rotate(45deg);
+			}
+		}
+
+		/* Features section */
+		.features {
+			padding: 80px 0;
+			background-color: var(--bg-color);
+		}
+
+		.section-title {
+			text-align: center;
+			margin-bottom: 50px;
+			color: var(--text-color);
+			font-size: 32px;
+			text-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
+		}
+
+		.features-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+			gap: 30px;
+		}
+
+		.feature-card {
+			background: var(--card-bg);
+			border-radius: 10px;
+			padding: 30px;
+			text-align: center;
+			box-shadow: var(--card-shadow);
+			transition: transform 0.3s ease;
+			border: 1px solid rgba(106, 17, 203, 0.3);
+			position: relative;
+			overflow: hidden;
+		}
+
+		.feature-card:hover {
+			transform: translateY(-10px);
+			box-shadow: 0 0 20px rgba(106, 17, 203, 0.7), 0 0 40px rgba(106, 17, 203, 0.4);
+		}
+
+		.feature-card::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			height: 3px;
+			background: linear-gradient(90deg, #6a11cb, #2575fc);
+			box-shadow: 0 0 10px #6a11cb;
+		}
+
+		.feature-icon {
+			font-size: 40px;
+			color: var(--feature-icon);
+			margin-bottom: 20px;
+			filter: drop-shadow(0 0 5px rgba(106, 17, 203, 0.7));
+		}
+
+		.feature-card h3 {
+			margin-bottom: 15px;
+			color: var(--text-color);
+			text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+		}
+
+		.feature-card p {
+			color: #ccc;
+		}
+
+		/* How it works */
+		.how-it-works {
+			padding: 80px 0;
+			background-color: var(--bg-color);
+		}
+
+		.steps {
+			display: flex;
+			justify-content: space-around;
+			flex-wrap: wrap;
+			margin-top: 50px;
+		}
+
+		.step {
+			text-align: center;
+			width: 250px;
+			margin-bottom: 30px;
+			position: relative;
+		}
+
+		.step-number {
+			background: #6a11cb;
+			color: white;
+			width: 50px;
+			height: 50px;
+			border-radius: 50%;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			margin: 0 auto 20px;
+			font-size: 24px;
+			font-weight: bold;
+			box-shadow: 0 0 15px rgba(106, 17, 203, 0.7);
+			position: relative;
+		}
+
+		.step-number::after {
+			content: '';
+			position: absolute;
+			width: 60px;
+			height: 60px;
+			border-radius: 50%;
+			border: 2px solid rgba(106, 17, 203, 0.5);
+			top: -5px;
+			left: -5px;
+			animation: pulse-ring 2s infinite;
+		}
+
+		@keyframes pulse-ring {
+			0% {
+				transform: scale(0.8);
+				opacity: 1;
+			}
+
+			100% {
+				transform: scale(1.5);
+				opacity: 0;
+			}
+		}
+
+		/* App section */
+		.app-section {
+			padding: 80px 0;
+			background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+			color: white;
+			position: relative;
+			overflow: hidden;
+		}
+
+		.app-section::before {
+			content: '';
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100"><rect width="100" height="100" fill="none"/><path d="M0 50 L100 50" stroke="%23ffffff" stroke-width="0.5" opacity="0.2"/><path d="M50 0 L50 100" stroke="%23ffffff" stroke-width="0.5" opacity="0.2"/></svg>');
+			background-size: 50px 50px;
+			opacity: 0.1;
+		}
+
+		.dark-theme .app-section {
+			background: linear-gradient(135deg, #2d0c5e 0%, #0d2f6d 100%);
+		}
+
+		.app-content {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			position: relative;
+			z-index: 1;
+		}
+
+		.app-text {
+			flex: 1;
+			min-width: 300px;
+			padding-right: 30px;
+		}
+
+		.app-buttons {
+			margin-top: 20px;
+		}
+
+		.app-btn {
+			display: inline-block;
+			background: white;
+			color: #6a11cb;
+			padding: 12px 25px;
+			border-radius: 10px;
+			text-decoration: none;
+			font-weight: bold;
+			margin-right: 15px;
+			transition: all 0.3s ease;
+			box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+		}
+
+		.app-btn:hover {
+			background: #ffd700;
+			transform: scale(1.05);
+			box-shadow: 0 0 15px #ffd700, 0 0 30px rgba(255, 215, 0, 0.5);
+		}
+
+		/* About Us Section */
+		.about-section {
+			padding: 80px 0;
+			background-color: var(--bg-color);
+		}
+
+		.team-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 30px;
+			margin-top: 50px;
+		}
+
+		.team-member {
+			background: var(--card-bg);
+			border-radius: 10px;
+			padding: 20px;
+			text-align: center;
+			box-shadow: var(--card-shadow);
+			transition: transform 0.3s ease;
+			border: 1px solid rgba(106, 17, 203, 0.3);
+		}
+
+		.team-member:hover {
+			transform: translateY(-5px);
+			box-shadow: 0 0 20px rgba(106, 17, 203, 0.7);
+		}
+
+		.member-photo {
+			width: 150px;
+			height: 150px;
+			border-radius: 50%;
+			background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+			margin: 0 auto 20px;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			color: white;
+			font-size: 50px;
+			box-shadow: 0 0 15px rgba(106, 17, 203, 0.7);
+			position: relative;
+		}
+
+		.member-photo::after {
+			content: '';
+			position: absolute;
+			width: 160px;
+			height: 160px;
+			border-radius: 50%;
+			border: 2px solid rgba(106, 17, 203, 0.5);
+			top: -5px;
+			left: -5px;
+			animation: pulse-ring 3s infinite;
+		}
+
+		.member-name {
+			font-weight: bold;
+			margin-bottom: 5px;
+			color: var(--text-color);
+			text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+		}
+
+		.member-role {
+			color: #6a11cb;
+			margin-bottom: 10px;
+			text-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+		}
+
+		.member-description {
+			color: #aaa;
+			font-size: 14px;
+		}
+
+		.dark-theme .member-description {
+			color: #aaa;
+		}
+
+		/* Footer */
+		footer {
+			background: var(--footer-bg);
+			color: white;
+			padding: 50px 0 20px;
+			border-top: 1px solid rgba(106, 17, 203, 0.5);
+			box-shadow: 0 -5px 15px rgba(106, 17, 203, 0.2);
+		}
+
+		.footer-content {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+			gap: 30px;
+			margin-bottom: 30px;
+		}
+
+		.footer-column h3 {
+			margin-bottom: 20px;
+			font-size: 18px;
+			text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+		}
+
+		.footer-column ul {
+			list-style: none;
+		}
+
+		.footer-column ul li {
+			margin-bottom: 10px;
+		}
+
+		.footer-column ul li a {
+			color: #ccc;
+			text-decoration: none;
+			transition: color 0.3s ease;
+		}
+
+		.footer-column ul li a:hover {
+			color: #ffd700;
+			text-shadow: 0 0 5px #ffd700;
+		}
+
+		.copyright {
+			text-align: center;
+			padding-top: 20px;
+			border-top: 1px solid rgba(106, 17, 203, 0.5);
+			color: #ccc;
+			font-size: 14px;
+		}
+
+		/* Modal styles */
+		.modal {
+			display: none;
+			position: fixed;
+			z-index: 1000;
+			left: 0;
+			top: 0;
+			width: 100%;
+			height: 100%;
+			background-color: rgba(0, 0, 0, 0.7);
+			animation: fadeIn 0.3s;
+			overflow-y: auto;
+		}
+
+		.modal-content {
+			background-color: var(--card-bg);
+			margin: 5% auto;
+			padding: 30px;
+			border-radius: 15px;
+			width: 90%;
+			max-width: 500px;
+			box-shadow: var(--neon-glow);
+			animation: slideIn 0.3s;
+			position: relative;
+			color: var(--text-color);
+			border: 1px solid rgba(106, 17, 203, 0.5);
+		}
+
+		.close {
+			color: #aaa;
+			float: right;
+			font-size: 28px;
+			font-weight: bold;
+			cursor: pointer;
+			transition: color 0.3s;
+			position: absolute;
+			right: 20px;
+			top: 15px;
+			text-shadow: 0 0 5px rgba(255, 255, 255, 0.5);
+		}
+
+		.close:hover {
+			color: #6a11cb;
+			text-shadow: 0 0 10px #6a11cb;
+		}
+
+		.form-group {
+			margin-bottom: 20px;
+		}
+
+		.form-group label {
+			display: block;
+			margin-bottom: 8px;
+			font-weight: 500;
+			color: var(--text-color);
+			text-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+		}
+
+		.form-group input,
+		.form-group select {
+			width: 100%;
+			padding: 12px;
+			background-color: var(--input-bg);
+			border: 1px solid var(--input-border);
+			border-radius: 8px;
+			font-size: 16px;
+			transition: border-color 0.3s;
+			color: var(--text-color);
+			box-shadow: 0 0 10px rgba(106, 17, 203, 0.3);
+		}
+
+		.form-group input:focus,
+		.form-group select:focus {
+			border-color: #2575fc;
+			outline: none;
+			box-shadow: 0 0 15px rgba(37, 117, 252, 0.5);
+		}
+
+		.form-title {
+			margin-bottom: 20px;
+			color: #6a11cb;
+			text-align: center;
+			font-size: 24px;
+			text-shadow: 0 0 10px rgba(106, 17, 203, 0.5);
+		}
+
+		.taxi-options {
+			display: flex;
+			flex-direction: column;
+			gap: 10px;
+			margin: 15px 0;
+		}
+
+		.taxi-option {
+			display: flex;
+			align-items: center;
+			padding: 12px;
+			border: 2px solid var(--input-border);
+			border-radius: 8px;
+			cursor: pointer;
+			transition: all 0.3s ease;
+			background-color: var(--input-bg);
+		}
+
+		.taxi-option:hover {
+			border-color: #6a11cb;
+			background-color: rgba(106, 17, 203, 0.2);
+			box-shadow: 0 0 10px rgba(106, 17, 203, 0.3);
+		}
+
+		.dark-theme .taxi-option:hover {
+			background-color: rgba(106, 17, 203, 0.3);
+		}
+
+		.taxi-option.selected {
+			border-color: #6a11cb;
+			background-color: rgba(106, 17, 203, 0.3);
+			box-shadow: 0 0 15px rgba(106, 17, 203, 0.5);
+		}
+
+		.dark-theme .taxi-option.selected {
+			background-color: rgba(106, 17, 203, 0.4);
+		}
+
+		.taxi-option input {
+			margin-right: 10px;
+			width: auto;
+		}
+
+		.taxi-icon {
+			margin-right: 10px;
+			font-size: 20px;
+			filter: drop-shadow(0 0 3px rgba(106, 17, 203, 0.5));
+		}
+
+		.taxi-details {
+			flex-grow: 1;
+		}
+
+		.taxi-name {
+			font-weight: bold;
+			color: var(--text-color);
+		}
+
+		.taxi-price {
+			color: #6a11cb;
+			font-size: 14px;
+			text-shadow: 0 0 5px rgba(106, 17, 203, 0.3);
+		}
+
+		.taxi-description {
+			color: #aaa;
+			font-size: 12px;
+			margin-top: 3px;
+		}
+
+		.dark-theme .taxi-description {
+			color: #aaa;
+		}
+
+		@keyframes fadeIn {
+			from {
+				opacity: 0;
+			}
+
+			to {
+				opacity: 1;
+			}
+		}
+
+		@keyframes slideIn {
+			from {
+				transform: translateY(-50px);
+				opacity: 0;
+			}
+
+			to {
+				transform: translateY(0);
+				opacity: 1;
+			}
+		}
+
+		/* New service features */
+		.new-feature {
+			display: flex;
+			align-items: center;
+			margin: 15px 0;
+			padding: 15px;
+			background: rgba(106, 17, 203, 0.1);
+			border-radius: 10px;
+			border-left: 4px solid #6a11cb;
+		}
+
+		.new-feature-icon {
+			font-size: 30px;
+			margin-right: 15px;
+			filter: drop-shadow(0 0 5px rgba(106, 17, 203, 0.7));
+		}
+
+		.new-feature-content h4 {
+			color: #6a11cb;
+			margin-bottom: 5px;
+			text-shadow: 0 0 5px rgba(106, 17, 203, 0.3);
+		}
+
+		.new-feature-content p {
+			color: #ccc;
+			font-size: 14px;
+		}
+
+		/* Responsive design */
+		@media (max-width: 768px) {
+			.header-content {
+				flex-direction: column;
+				text-align: center;
+			}
+
+			nav ul {
+				margin-top: 20px;
+				justify-content: center;
+				flex-wrap: wrap;
+			}
+
+			nav ul li {
+				margin: 10px;
+			}
+
+			.hero h1 {
+				font-size: 32px;
+			}
+
+			.hero p {
+				font-size: 18px;
+			}
+
+			.modal-content {
+				width: 95%;
+				margin: 10% auto;
+				padding: 20px;
+			}
+
+			.steps {
+				flex-direction: column;
+				align-items: center;
+			}
+
+			.theme-indicator {
+				display: none;
+			}
+
+			.new-feature {
+				flex-direction: column;
+				text-align: center;
+			}
+
+			.new-feature-icon {
+				margin-right: 0;
+				margin-bottom: 10px;
+			}
+		}
+	</style>
+</head>
+
+<body>
+	<!-- Header -->
+	<header>
+		<div class="container">
+			<div class="header-content">
+				<div class="logo">
+					<span class="logo-icon">🚖</span>
+					<span>Такси для души</span>
+				</div>
+				<nav>
+					<ul>
+						<li><a href="#" id="aboutLink">О нас</a></li>
+						<li><a href="#services">Услуги</a></li>
+						<li><a href="#app">Приложение</a></li>
+						<li><a href="#contacts">Контакты</a></li>
+						<li>
+							<div class="theme-toggle-container">
+								<button id="themeToggle" class="theme-toggle" aria-label="Переключить тему"></button>
+								<div id="themeIndicator" class="theme-indicator">
+									<i>☀️</i> Светлая тема
+								</div>
+							</div>
+						</li>
+					</ul>
+				</nav>
+			</div>
+		</div>
+	</header>
+
+	<!-- Hero Section -->
+	<section class="hero">
+		<div class="container">
+			<h1>Такси для души - комфорт с первой поездки</h1>
+			<p>Наслаждайтесь поездками с нашим сервисом. Быстро, безопасно и с заботой о вас.</p>
+			<button id="orderBtn" class="btn">Заказать такси</button>
+		</div>
+	</section>
+
+	<!-- About Us Section (Hidden by default) -->
+	<section id="aboutSection" class="about-section" style="display: none;">
+		<div class="container">
+			<h2 class="section-title">Наша команда</h2>
+			<p class="section-description" style="text-align: center; margin-bottom: 50px;">
+				Познакомьтесь с нашей замечательной командой профессионалов, которые работают для вашего комфорта.
+			</p>
+			<div class="team-grid">
+				<!-- Team Member 1 -->
+				<div class="team-member">
+					<div class="member-photo">👨‍💼</div>
+					<h3 class="member-name">Андрей</h3>
+					<p class="member-role">Маркетолог</p>
+					<p class="member-description">Разрабатывает стратегии продвижения и привлекает новых клиентов.</p>
+				</div>
+
+				<!-- Team Member 2 -->
+				<div class="team-member">
+					<div class="member-photo">👨‍💼</div>
+					<h3 class="member-name">Нургелий</h3>
+					<p class="member-role">Финансист</p>
+					<p class="member-description">Управляет бюджетом компании и финансовыми потоками.</p>
+				</div>
+
+				<!-- Team Member 3 -->
+				<div class="team-member">
+					<div class="member-photo">👨‍🎨</div>
+					<h3 class="member-name">Иван</h3>
+					<p class="member-role">Дизайнер</p>
+					<p class="member-description">Создает визуальную концепцию бренда и интерфейсы приложений.</p>
+				</div>
+
+				<!-- Team Member 4 -->
+				<div class="team-member">
+					<div class="member-photo">👨‍💻</div>
+					<h3 class="member-name">Максим</h3>
+					<p class="member-role">Диспетчер</p>
+					<p class="member-description">Координирует работу водителей и обеспечивает своевременную подачу
+						такси.</p>
+				</div>
+
+				<!-- Team Member 5 -->
+				<div class="team-member">
+					<div class="member-photo">👨‍💻</div>
+					<h3 class="member-name">Лев</h3>
+					<p class="member-role">Программист</p>
+					<p class="member-description">Разрабатывает и поддерживает IT-инфраструктуру компании.</p>
+				</div>
+
+				<!-- Team Member 6 -->
+				<div class="team-member">
+					<div class="member-photo">👨‍✈️</div>
+					<h3 class="member-name">Гаджи</h3>
+					<p class="member-role">Таксист</p>
+					<p class="member-description">Профессиональный водитель с безупречной репутацией.</p>
+				</div>
+
+				<!-- Team Member 7 -->
+				<div class="team-member">
+					<div class="member-photo">❤️</div>
+					<h3 class="member-name">Наши остальные сотрудники</h3>
+					<p class="member-role">Наша команда</p>
+					<p class="member-description">Все те, кто делает ваши поездки комфортными и безопасными.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Features Section -->
+	<section class="features" id="services">
+		<div class="container">
+			<h2 class="section-title">Наши преимущества</h2>
+			<div class="features-grid">
+				<div class="feature-card">
+					<div class="feature-icon">🚗</div>
+					<h3>Комфортные автомобили</h3>
+					<p>Современный парк автомобилей с кондиционерами и удобными сиденьями.</p>
+				</div>
+				<div class="feature-card">
+					<div class="feature-icon">⏱️</div>
+					<h3>Быстрое прибытие</h3>
+					<p>Среднее время подачи автомобиля всего 7 минут в любом районе города.</p>
+				</div>
+				<div class="feature-card">
+					<div class="feature-icon">💰</div>
+					<h3>Доступные цены</h3>
+					<p>Честная система расчета стоимости без скрыных комиссий и переплат.</p>
+				</div>
+				<div class="feature-card">
+					<div class="feature-icon">🧠</div>
+					<h3>Встроенный искусственный интеллект</h3>
+					<p>Если у вас возникнут вопросы, вы можете обратиться к нашему ИИ-ассистенту за разъяснениями.</p>
+				</div>
+				<div class="feature-card">
+					<div class="feature-icon">🔊</div>
+					<h3>8D аудио</h3>
+					<p>Пространственный или же иммерсивный звук, обеспечивающий эффект полного погружение.</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- How It Works Section -->
+	<section class="how-it-works">
+		<div class="container">
+			<h2 class="section-title">Как заказать такси</h2>
+			<div class="steps">
+				<div class="step">
+					<div class="step-number">1</div>
+					<h3>Заказ</h3>
+					<p>Сделайте заказ через приложение или по телефону</p>
+				</div>
+				<div class="step">
+					<div class="step-number">2</div>
+					<h3>Ожидание</h3>
+					<p>Водитель приедет в указанное место в течение нескольких минут</p>
+				</div>
+				<div class="step">
+					<div class="step-number">3</div>
+					<h3>Поездка</h3>
+					<p>Наслаждайтесь комфортной поездкой по городу</p>
+				</div>
+				<div class="step">
+					<div class="step-number">4</div>
+					<h3>Оплата</h3>
+					<p>Оплатите поездку наличными или картой</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- App Section -->
+	<section class="app-section" id="app">
+		<div class="container">
+			<div class="app-content">
+				<div class="app-text">
+					<h2>Скачайте наше приложение</h2>
+					<p>Заказывайте такси в несколько кликов, отслеживайте местоположение автомобиля и получайте скидки
+						по программе лояльности.</p>
+					<div class="app-buttons">
+						<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="app-btn" target="_blank">App
+							Store</a>
+						<a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" class="app-btn" target="_blank">Google
+							Play</a>
+					</div>
+				</div>
+				<div class="app-image">
+					<!-- Placeholder for app image -->
+					<div
+						style="width: 300px; height: 400px; background: rgba(255,255,255,0.2); border-radius: 20px; display: flex; align-items: center; justify-content: center; font-size: 50px;">
+						📱</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Footer -->
+	<footer id="contacts">
+		<div class="container">
+			<div class="footer-content">
+				<div class="footer-column">
+					<h3>Такси для души</h3>
+					<p>Сервис заказа такси с вниманием к каждому клиенту. Работаем круглосуточно.</p>
+				</div>
+				<div class="footer-column">
+					<h3>Контакты</h3>
+					<ul>
+						<li>Телефон: +7 (999) 999-99-99</li>
+						<li>Email: info@taxidlyadushi.ru</li>
+						<li>Адрес: г. Москва, ул. Примерная, д. 1</li>
+					</ul>
+				</div>
+				<div class="footer-column">
+					<h3>Ссылки</h3>
+					<ul>
+						<li><a href="#" id="aboutFooterLink">О нас</a></li>
+						<li><a href="#services">Услуги</a></li>
+						<li><a href="#app">Приложение</a></li>
+					</ul>
+				</div>
+			</div>
+			<div class="copyright">
+				<p>&copy; 2025 Такси для души. Все права защищены.</p>
+			</div>
+		</div>
+	</footer>
+
+	<!-- Order Modal -->
+	<div id="orderModal" class="modal">
+		<div class="modal-content">
+			<span class="close">&times;</span>
+			<h2 class="form-title">Заказать такси</h2>
+			<form id="orderForm">
+				<div class="form-group">
+					<label for="from">Откуда:</label>
+					<input type="text" id="from" placeholder="Ваше местоположение" required>
+				</div>
+				<div class="form-group">
+					<label for="to">Куда:</label>
+					<input type="text" id="to" placeholder="Куда поедем" required>
+				</div>
+
+				<div class="form-group">
+					<label>Выберите класс такси:</label>
+					<div class="taxi-options">
+						<label class="taxi-option">
+							<input type="radio" name="taxi-class" value="comfort" data-price="750₽">
+							<span class="taxi-icon">🚕</span>
+							<div class="taxi-details">
+								<div class="taxi-name">Комфорт</div>
+								<div class="taxi-price">от 750₽</div>
+								<div class="taxi-description">Стандартный автомобиль для повседневных поездок</div>
+							</div>
+						</label>
+
+						<label class="taxi-option">
+							<input type="radio" name="taxi-class" value="comfort-plus" data-price="1050₽" checked>
+							<span class="taxi-icon">🚙</span>
+							<div class="taxi-details">
+								<div class="taxi-name">Комфорт+</div>
+								<div class="taxi-price">от 1050₽</div>
+								<div class="taxi-description">Просторный автомобиль с улучшенным комфортом</div>
+							</div>
+						</label>
+
+						<label class="taxi-option">
+							<input type="radio" name="taxi-class" value="business" data-price="1500₽">
+							<span class="taxi-icon">🚘</span>
+							<div class="taxi-details">
+								<div class="taxi-name">Бизнес</div>
+								<div class="taxi-price">от 1500₽</div>
+								<div class="taxi-description">Премиум автомобиль для особых случаев</div>
+							</div>
+						</label>
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label for="phone">Ваш телефон:</label>
+					<input type="tel" id="phone" placeholder="+7 (XXX) XXX-XX-XX" required>
+				</div>
+				<div class="form-group">
+					<label for="time">Когда подать машину:</label>
+					<input type="text" id="time" placeholder="Сейчас или укажите время">
+				</div>
+				<button type="submit" class="btn" style="width: 100%;">Подтвердить заказ</button>
+			</form>
+		</div>
+	</div>
+
+	<script>
+		// Theme toggle functionality
+		const themeToggle = document.getElementById('themeToggle');
+		const themeIndicator = document.getElementById('themeIndicator');
+		const body = document.body;
+
+		// Check for saved theme preference or respect OS preference
+		const savedTheme = localStorage.getItem('theme');
+		const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+
+		// Set default to light theme
+		if (savedTheme === 'dark') {
+			body.classList.add('dark-theme');
+			themeIndicator.innerHTML = '<i>🌙</i> Темная тема';
+		} else {
+			body.classList.remove('dark-theme');
+			themeIndicator.innerHTML = '<i>☀️</i> Светлая тема';
+		}
+
+		themeToggle.addEventListener('click', () => {
+			body.classList.toggle('dark-theme');
+			if (body.classList.contains('dark-theme')) {
+				localStorage.setItem('theme', 'dark');
+				themeIndicator.innerHTML = '<i>🌙</i> Темная тема';
+			} else {
+				localStorage.setItem('theme', 'light');
+				themeIndicator.innerHTML = '<i>☀️</i> Светлая тема';
+			}
+		});
+
+		// Get the modal
+		const modal = document.getElementById("orderModal");
+
+		// Get the button that opens the modal
+		const btn = document.getElementById("orderBtn");
+
+		// Get the <span> element that closes the modal
+		const span = document.getElementsByClassName("close")[0];
+
+		// When the user clicks the button, open the modal 
+		btn.onclick = function () {
+			modal.style.display = "block";
+		}
+
+		// When the user clicks on <span> (x), close the modal
+		span.onclick = function () {
+			modal.style.display = "none";
+		}
+
+		// When the user clicks anywhere outside of the modal, close it
+		window.onclick = function (event) {
+			if (event.target == modal) {
+				modal.style.display = "none";
+			}
+		}
+
+		// Handle taxi class selection
+		const taxiOptions = document.querySelectorAll('.taxi-option');
+		taxiOptions.forEach(option => {
+			option.addEventListener('click', function () {
+				// Remove selected class from all options
+				taxiOptions.forEach(opt => opt.classList.remove('selected'));
+				// Add selected class to clicked option
+				this.classList.add('selected');
+				// Check the radio button
+				this.querySelector('input[type="radio"]').checked = true;
+			});
+
+			// Pre-select the comfort+ option
+			if (option.querySelector('input[type="radio"]').checked) {
+				option.classList.add('selected');
+			}
+		});
+
+		// Handle form submission
+		document.getElementById("orderForm").addEventListener("submit", function (e) {
+			e.preventDefault();
+
+			// Get form values
+			const from = document.getElementById("from").value;
+			const to = document.getElementById("to").value;
+			const phone = document.getElementById("phone").value;
+			const time = document.getElementById("time").value || "сейчас";
+			const taxiClass = document.querySelector('input[name="taxi-class"]:checked').value;
+			const taxiPrice = document.querySelector('input[name="taxi-class"]:checked').dataset.price;
+
+			// Map class values to display names
+			const classNames = {
+				'comfort': 'Комфорт',
+				'comfort-plus': 'Комфорт+',
+				'business': 'Бизнес'
+			};
+
+			// Here you would normally send this data to a server
+			// For now, we'll just show an alert and close the modal
+			alert(`Спасибо! Ваш заказ принят.\nМаршрут: ${from} → ${to}\nКласс: ${classNames[taxiClass]} (${taxiPrice})\nВремя: ${time}\nМы свяжемся с вами по номеру: ${phone}`);
+			modal.style.display = "none";
+
+			// Reset form
+			document.getElementById("orderForm").reset();
+
+			// Re-select the default option
+			taxiOptions.forEach(option => {
+				option.classList.remove('selected');
+				if (option.querySelector('input[type="radio"]').value === 'comfort-plus') {
+					option.classList.add('selected');
+					option.querySelector('input[type="radio"]').checked = true;
+				}
+			});
+		});
+
+		// About page functionality
+		const aboutLink = document.getElementById("aboutLink");
+		const aboutFooterLink = document.getElementById("aboutFooterLink");
+		const aboutSection = document.getElementById("aboutSection");
+		const mainContent = document.querySelector("main");
+
+		function showAboutPage() {
+			// Hide all main sections
+			document.querySelectorAll('section:not(#aboutSection)').forEach(section => {
+				section.style.display = 'none';
+			});
+
+			// Show about section
+			aboutSection.style.display = 'block';
+
+			// Scroll to top
+			window.scrollTo(0, 0);
+		}
+
+		function showMainPage() {
+			// Show all main sections
+			document.querySelectorAll('section').forEach(section => {
+				section.style.display = 'block';
+			});
+
+			// Hide about section
+			aboutSection.style.display = 'none';
+		}
+
+		// Add event listeners
+		aboutLink.addEventListener('click', function (e) {
+			e.preventDefault();
+			showAboutPage();
+		});
+
+		aboutFooterLink.addEventListener('click', function (e) {
+			e.preventDefault();
+			showAboutPage();
+		});
+
+		// Add logo click to return to main page
+		document.querySelector('.logo').addEventListener('click', function (e) {
+			e.preventDefault();
+			showMainPage();
+		});
+
+		// Rick Roll functionality for app buttons
+		document.querySelectorAll('.app-btn').forEach(button => {
+			button.addEventListener('click', function (e) {
+				e.preventDefault();
+				// Open Rick Roll in new tab
+				window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank');
+
+				// Show funny message
+				alert('🎵 Never gonna give you up! 🎵\nНаше приложение скоро будет доступно!');
+			});
+		});
+	</script>
+</body>
+
+</html>
