@@ -25,17 +25,19 @@
 		}
 
 		.dark-theme {
-			--bg-color: #0a0a1a;
-			--text-color: #f0f0f0;
-			--header-bg: linear-gradient(135deg, #2d0c5e 0%, #0d2f6d 100%);
-			--card-bg: rgba(45, 45, 70, 0.8);
-			--card-shadow: 0 0 15px rgba(106, 17, 203, 0.6), 0 0 25px rgba(37, 117, 252, 0.4);
-			--input-bg: rgba(50, 50, 80, 0.8);
-			--input-border: #8e44ad;
-			--footer-bg: #0d0d1f;
-			--feature-icon: #8e44ad;
-			--theme-indicator-bg: #8e44ad;
+			--bg-color: #050510;
+			--text-color: #ffffff;
+			--header-bg: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+			--card-bg: rgba(20, 20, 35, 0.95);
+			--card-shadow: 0 0 15px rgba(106, 17, 203, 0.6), 0 0 30px rgba(37, 117, 252, 0.4);
+			--input-bg: rgba(25, 25, 45, 0.95);
+			--input-border: #6a11cb;
+			--footer-bg: #050510;
+			--feature-icon: #6a11cb;
+			--theme-indicator-bg: #6a11cb;
 			--theme-indicator-text: #fff;
+			--neon-glow: 0 0 10px rgba(106, 17, 203, 0.7), 0 0 20px rgba(106, 17, 203, 0.5), 0 0 30px rgba(106, 17, 203, 0.3);
+			--blue-neon-glow: 0 0 10px rgba(37, 117, 252, 0.7), 0 0 20px rgba(37, 117, 252, 0.5), 0 0 30px rgba(37, 117, 252, 0.3);
 		}
 
 		* {
@@ -732,9 +734,8 @@
 		}
 
 		.taxi-price {
-			color: #6a11cb;
+			color: #aaa;
 			font-size: 14px;
-			text-shadow: 0 0 5px rgba(106, 17, 203, 0.3);
 		}
 
 		.taxi-description {
@@ -898,7 +899,7 @@
 			<div class="team-grid">
 				<!-- Team Member 1 -->
 				<div class="team-member">
-					<div class="member-photo">👨‍💼</div>
+					<div class="member-photo">🫅</div>
 					<h3 class="member-name">Андрей</h3>
 					<p class="member-role">Маркетолог</p>
 					<p class="member-description">Разрабатывает стратегии продвижения и привлекает новых клиентов.</p>
@@ -922,7 +923,7 @@
 
 				<!-- Team Member 4 -->
 				<div class="team-member">
-					<div class="member-photo">👨‍💻</div>
+					<div class="member-photo">👲</div>
 					<h3 class="member-name">Максим</h3>
 					<p class="member-role">Диспетчер</p>
 					<p class="member-description">Координирует работу водителей и обеспечивает своевременную подачу
@@ -979,12 +980,13 @@
 				<div class="feature-card">
 					<div class="feature-icon">🧠</div>
 					<h3>Встроенный искусственный интеллект</h3>
-					<p>Если у вас возникнут вопросы, вы можете обратиться к нашему ИИ-ассистенту за разъяснениями.</p>
+					<p>Если у вас возникнут вопросы, вы можете обратиться к нашему ИИ-ассистенту в машине за
+						разъяснениями.</p>
 				</div>
 				<div class="feature-card">
 					<div class="feature-icon">🔊</div>
 					<h3>8D аудио</h3>
-					<p>Пространственный или же иммерсивный звук, обеспечивающий эффект полного погружение.</p>
+					<p>Пространственный или же иммерсивный звук, обеспечивающий эффект полного погружения.</p>
 				</div>
 			</div>
 		</div>
@@ -1177,7 +1179,7 @@
 		// Get the <span> element that closes the modal
 		const span = document.getElementsByClassName("close")[0];
 
-		// When the user clicks the button, open the modal 
+		// When the user clicks the button, open the modal
 		btn.onclick = function () {
 			modal.style.display = "block";
 		}
